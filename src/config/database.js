@@ -1,22 +1,30 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
-
+import configFile from "./config.js";
 dotenv.config();
 
-const sequelize = new Sequelize("JPLEX", "root", null, {
-  host: "localhost",
-  dialect: "mysql",
-});
+const env = process.env.NODE_ENV || "development";
+const config = configFile[env];
 
-export default sequelize;
+const sequelize = new Sequelize(
+  config.database || undefined,
+  config.username || undefined,
+  config.passsword || undefined,
+  {
+    dialect: config.dialect, // cái này là loại databae
+    storage: config.storage, // cái này là uri của database
+    host: config.host,
+    logging: config.logging,
+  }
+);
 
-let connectDB = async () => {
+export const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    console.log("connection has been established successfully");
+    console.log(`Connected to DB successfully! (env: ${env} )`);
   } catch (error) {
-    console.error("unable to connect to the database", error);
+    console.error("Unable to connect to DB:", error);
   }
 };
 
-module.exports = connectDB;
+export default sequelize;
