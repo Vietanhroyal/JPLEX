@@ -1,8 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
+
 import initWebRoutes from "./route/web";
-import {connectDB} from "./config/database";
+import initStudentRoutes from "./routes/studentRoute";
+// đù má sao nó éo bắt vào cái đường dẫn đấy nhỉ 
+import { connectDB } from "./config/database";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -13,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 viewEngine(app);
 initWebRoutes(app);
+initStudentRoutes(app);
 connectDB();
 
 let port = process.env.PORT || 6969;
