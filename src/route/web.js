@@ -5,9 +5,7 @@ let router = express.Router();
 
 let initWebRoutes = (app) => {
   router.get("/vietanhdz", homeController.getHomePage);
-  router.get("/", (req, res) => {
-    res.send("Hello World!");
-  });
+  // router.get("/", homeController.getcrud);
 
   return app.use("/", router); // dùng để gắn các route đã được định nghĩa vào app express
 };

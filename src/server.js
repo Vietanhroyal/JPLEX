@@ -3,8 +3,9 @@ import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
 
 import initWebRoutes from "./route/web";
-import initStudentRoutes from "./routes/studentRoute";
-// đù má sao nó éo bắt vào cái đường dẫn đấy nhỉ 
+// cái này thì ok còn thằng dưới éo dc
+import initStudentRoutes from "./route/studentRoute";
+// đù má sao nó éo bắt vào cái đường dẫn đấy nhỉ
 import { connectDB } from "./config/database";
 import dotenv from "dotenv";
 

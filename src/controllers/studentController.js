@@ -18,31 +18,10 @@ const getAllStudents = async (req, res) => {
 // Tạo Student
 const createStudent = async (req, res) => {
   try {
-    const {
-      studentId,
-      name,
-      email,
-      gender,
-      birthdate,
-      phoneNumber,
-      address,
-      japaneseLevel,
-    } = req.body;
-
-    const newStudent = await studentService.createStudent({
-      studentId,
-      name,
-      email,
-      gender,
-      birthdate,
-      phoneNumber,
-      address,
-      japaneseLevel,
-    });
+    await studentService.createStudent(req.body);
 
     return res.status(201).json({
       message: "Student created successfully",
-      data: newStudent,
     });
   } catch (error) {
     console.error("Error creating student:", error);
@@ -123,10 +102,15 @@ const deleteStudent = async (req, res) => {
   }
 };
 
+let getcrud = (req, res) => {
+  return res.render("test.ejs");
+};
+
 module.exports = {
   getAllStudents,
   createStudent,
   getStudent,
   updateStudent,
   deleteStudent,
+  getcrud,
 };

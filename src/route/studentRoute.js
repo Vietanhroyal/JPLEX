@@ -7,11 +7,11 @@ const router = express.Router();
 // Hàm khởi tạo route
 const initStudentRoutes = (app) => {
   // Ví dụ: CRUD cho student
-  router.get("/api/students", studentController); // Lấy tất cả students
-  router.post("/api/students", createStudent); // Tạo student
-  router.get("/api/students/:id", getStudent); // Lấy 1 student
-  router.put("/api/students/:id", updateStudent); // Sửa student
-  router.delete("/api/students/:id", deleteStudent); // Xoá student
+  router.get("/api/getallstudents", studentController.getcrud); // Lấy tất cả students
+  router.post("/api/createstudents", studentController.createStudent); // Tạo student
+  router.get("/api/students/:id", studentController.getStudent); // Lấy 1 student
+  router.put("/api/students/:id", studentController.updateStudent); // Sửa student
+  router.delete("/api/students/:id", studentController.deleteStudent); // Xoá student
 
   // Gắn router vào app
   // Ở đây, ta dùng "/" làm base;
@@ -19,4 +19,4 @@ const initStudentRoutes = (app) => {
   return app.use("/", router);
 };
 
-export default initStudentRoutes
+export default initStudentRoutes;

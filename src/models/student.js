@@ -1,13 +1,14 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, DataTypes } = require("sequelize");
 
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize) => {
   class Student extends Model {
     static associate(models) {
       // Một sinh viên có thể học nhiều khóa học (Nhiều-Nhiều với Course)
       Student.belongsToMany(models.Course, {
-        through: models.Enrollment,
+        through: models.Enrollment, // Dùng model Enrollment làm bảng trung gian
         foreignKey: "studentId",
+        otherKey: "courseId",
       });
     }
   }
@@ -15,9 +16,14 @@ module.exports = (sequelize, DataTypes) => {
   Student.init(
     {
       studentId: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,
+        primaryKey: true,
+        validate: {
+          len: [8, 8], // Đảm bảo đúng 8 chữ số
+        },
+        defaultValue: () => Math.floor(10000000 + Math.random() * 90000000), // Sinh số ngẫu nhiên 8 chữ số
       },
       name: {
         type: DataTypes.STRING,
@@ -28,8 +34,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          isEmail: true, // Kiểm tra email hợp lệ
+          isEmail: true,
         },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false, // Yêu cầu nhập mật khẩu
       },
       gender: {
         type: DataTypes.ENUM("Male", "Female", "Other"),
@@ -43,8 +53,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isNumeric: true, // Chỉ chứa số
-          len: [10, 15], // Độ dài từ 10 đến 15 số
+          isNumeric: true,
+          len: [10, 15],
         },
       },
       address: {
@@ -58,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
       enrollmentDate: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW, // Mặc định là ngày hiện tại
+        defaultValue: DataTypes.NOW, // Tự động lấy thời gian hiện tại khi nhập học
       },
     },
     {

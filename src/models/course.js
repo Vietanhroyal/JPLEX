@@ -1,16 +1,18 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Course extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      // Một khóa học có thể có nhiều sinh viên (Nhiều-Nhiều với Student)
+      Course.belongsToMany(models.Student, {
+        through: models.Enrollment, // Dùng model Enrollment làm bảng trung gian
+        foreignKey: "courseId",
+        otherKey: "studentId",
+      });
     }
   }
+
   Course.init(
     {
       courseId: {
@@ -42,7 +44,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Course",
+      tableName: "Courses",
     }
   );
+
   return Course;
 };
