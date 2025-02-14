@@ -18,7 +18,17 @@ const getAllStudents = async (req, res) => {
 // Tạo Student
 const createStudent = async (req, res) => {
   try {
-    await studentService.createStudent(req.body);
+    let result = await studentService.createStudent(req.body);
+    if (
+      result &&
+      result.success === false &&
+      result.errorType === "Validation Error"
+    ) {
+      return res.status(400).json({
+        message: "Validation Error",
+        errors: result.errors,
+      });
+    }
 
     return res.status(201).json({
       message: "Student created successfully",

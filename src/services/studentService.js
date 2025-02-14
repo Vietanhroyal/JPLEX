@@ -20,7 +20,7 @@ const createStudent = async (data) => {
     let hashPassword = await hashStudentPassword(data.password);
     console.log("Received data in service:", hashPassword);
     const student = await Student.create({
-      name: data.name, 
+      name: data.name,
       email: data.email,
       password: hashPassword,
       gender: data.gender,
@@ -32,8 +32,27 @@ const createStudent = async (data) => {
 
     return student;
   } catch (error) {
-    console.error("Error in createStudent:", error);
-    throw error;
+    console.error("Error caught:", error);
+
+    if (error.name === "SequelizeValidationError") {
+      return {
+        success: false,
+        errorType: "Validation Error",
+        errors: error.errors.map((err) => err.message),
+      };
+    } else if (error.name === "SequelizeUniqueConstraintError") {
+      return {
+        success: false,
+        errorType: "Unique Constraint Error",
+        errors: ["Email already exists"],
+      };
+    } else {
+      return {
+        success: false,
+        errorType: "Unknown Error",
+        errors: [error.message],
+      };
+    }
   }
 };
 
@@ -53,19 +72,29 @@ const getStudentById = async (id) => {
 
 // Cập nhật Student
 const updateStudent = async (id, newData) => {
-  const student = await Student.findByPk(id);
-  if (!student) return null; // Trả về null nếu không tìm thấy student
+  try {
+    const student = await Student.findByPk(id);
+    if (!student) return null; // Trả về null nếu không tìm thấy student
 
-  return await student.update(newData);
+    return await student.update(newData);
+  } catch (error) {
+    console.error("Error in updateStudent:", error);
+    throw error;
+  }
 };
 
 // Xoá Student
 const deleteStudent = async (id) => {
-  const student = await Student.findByPk(id);
-  if (!student) return null; // Trả về null nếu không tìm thấy student
+  try {
+    const student = await Student.findByPk(id);
+    if (!student) return null; // Trả về null nếu không tìm thấy student
 
-  await student.destroy();
-  return student; // Trả về bản ghi đã bị xoá
+    await student.destroy();
+    return student; // Trả về bản ghi đã bị xoá
+  } catch (error) {
+    console.error("Error in deleteStudent:", error);
+    throw error;
+  }
 };
 
 // Export tất cả các service

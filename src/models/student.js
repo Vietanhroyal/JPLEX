@@ -20,14 +20,15 @@ module.exports = (sequelize) => {
         allowNull: false,
         unique: true,
         primaryKey: true,
-        validate: {
-          len: [8, 8], // Đảm bảo đúng 8 chữ số
-        },
+
         defaultValue: () => Math.floor(10000000 + Math.random() * 90000000), // Sinh số ngẫu nhiên 8 chữ số
       },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          is: /^[a-zA-Z\s]*$/, // Chỉ cho phép chữ cái và khoảng trắng
+        },
       },
       email: {
         type: DataTypes.STRING,
@@ -40,6 +41,20 @@ module.exports = (sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false, // Yêu cầu nhập mật khẩu
+        validate: {
+          len: [8, 100], // Độ dài tối thiểu 8 ký tự
+          isStrongPassword(value) {
+            if (
+              !/[A-Z]/.test(value) ||
+              !/[a-z]/.test(value) ||
+              !/[0-9]/.test(value)
+            ) {
+              throw new Error(
+                "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+              );
+            }
+          },
+        },
       },
       gender: {
         type: DataTypes.ENUM("Male", "Female", "Other"),
@@ -48,6 +63,10 @@ module.exports = (sequelize) => {
       birthdate: {
         type: DataTypes.DATE,
         allowNull: false,
+        validate: {
+          isDate: true,
+          isBefore: new Date().toDateString(), // Ngày sinh phải trước ngày hiện tại
+        },
       },
       phoneNumber: {
         type: DataTypes.STRING,
