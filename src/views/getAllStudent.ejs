@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+    <Title>getAllStudent</Title>
+  </head>
+  <body>
+    <h2>HTML Table</h2>
+
+    <table>
+      <tr>
+        <th>studentID</th>
+        <th>name</th>
+        <th>birthdate</th>
+        <th>japaneseLevel</th>
+        <th>Email</th>
+      </tr>
+      <% for(var i=0; i < data.length; i++) { %>
+      <tr>
+        <td><%= data[i].studentId %></td>
+        <td><%= data[i].name %></td>
+        <td><%= data[i].birthdate %></td>
+        <td><%= data[i].japaneseLevel %></td>
+        <td><%= data[i].email %></td>
+      </tr>
+      <% } %>
+    </table>
+  </body>
+</html>

@@ -5,10 +5,8 @@ const studentService = require("../services/studentService");
 const getAllStudents = async (req, res) => {
   try {
     const students = await studentService.getAllStudents();
-    return res.status(200).json({
-      message: "Success",
-      data: students,
-    });
+   
+    return res.render("getAllStudent.ejs", { data: students });
   } catch (error) {
     console.error("Error fetching students:", error);
     return res.status(500).json({ message: "Internal server error" });

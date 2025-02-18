@@ -7,7 +7,12 @@ const salt = bcrypt.genSalt(10);
 
 // Lấy tất cả Student
 const getAllStudents = async () => {
-  return await Student.findAll();
+  try {
+    const students = await Student.findAll();
+    return students;
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 // Tạo mới Student
