@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
+const methodOverride = require("method-override");
 
 import initWebRoutes from "./route/web";
 // cái này thì ok còn thằng dưới éo dc
@@ -12,6 +13,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 let app = express();
+app.use(methodOverride("_method"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

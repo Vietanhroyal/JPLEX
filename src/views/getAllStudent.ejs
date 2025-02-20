@@ -31,6 +31,7 @@
         <th>birthdate</th>
         <th>japaneseLevel</th>
         <th>Email</th>
+        <th>Actions</th>
       </tr>
       <% for(var i=0; i < data.length; i++) { %>
       <tr>
@@ -39,6 +40,14 @@
         <td><%= data[i].birthdate %></td>
         <td><%= data[i].japaneseLevel %></td>
         <td><%= data[i].email %></td>
+        <td>
+          <a href="/api/editstudent/<%= data[i].studentId %>">
+            <button type="button">Edit</button>
+          </a>
+          <a href="/api/deletestudents?id=<%= data[i].studentId %>">
+            <button type="button">Delete</button>
+          </a>
+        </td>
       </tr>
       <% } %>
     </table>

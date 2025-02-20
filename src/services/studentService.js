@@ -72,7 +72,15 @@ const hashStudentPassword = async (password) => {
 
 // Lấy Student theo ID
 const getStudentById = async (id) => {
-  return await Student.findByPk(id);
+  try {
+    const student = await Student.findByPk(id);
+    if (!student) {
+      throw new Error("Student not found");
+    }
+    return student;
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 // Cập nhật Student

@@ -5,7 +5,7 @@ const studentService = require("../services/studentService");
 const getAllStudents = async (req, res) => {
   try {
     const students = await studentService.getAllStudents();
-   
+
     return res.render("getAllStudent.ejs", { data: students });
   } catch (error) {
     console.error("Error fetching students:", error);
@@ -59,7 +59,7 @@ const getStudent = async (req, res) => {
 // Cập nhật Student
 const updateStudent = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.query.id;
     const {
       studentId,
       name,
@@ -114,6 +114,22 @@ let getcrud = (req, res) => {
   return res.render("test.ejs");
 };
 
+let getEditStudent = async (req, res) => {
+  let studentId = req.params.id;
+
+  if (!studentId) {
+    return res.status(400).json({ message: "Student not found" });
+  } else {
+    try {
+      let studentData = await studentService.getStudentById(studentId);
+      res.render("editStudent.ejs", { student: studentData });
+    } catch (error) {
+      console.error("Error fetching student:", error);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  }
+};
+
 module.exports = {
   getAllStudents,
   createStudent,
@@ -121,4 +137,5 @@ module.exports = {
   updateStudent,
   deleteStudent,
   getcrud,
+  getEditStudent,
 };
