@@ -87,7 +87,9 @@ const getStudentById = async (id) => {
 const updateStudent = async (id, newData) => {
   try {
     const student = await Student.findByPk(id);
-    if (!student) return null; // Trả về null nếu không tìm thấy student
+    if (!student) {
+      throw new Error("Student not found");
+    } // Trả về null nếu không tìm thấy student
 
     return await student.update(newData);
   } catch (error) {

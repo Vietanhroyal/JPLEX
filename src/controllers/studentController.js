@@ -59,7 +59,7 @@ const getStudent = async (req, res) => {
 // Cập nhật Student
 const updateStudent = async (req, res) => {
   try {
-    const { id } = req.query.id;
+    const { id } = req.params;
     const {
       studentId,
       name,
@@ -100,9 +100,7 @@ const deleteStudent = async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await studentService.deleteStudent(id);
-    if (!deleted) {
-      return res.status(404).json({ message: "Student not found" });
-    }
+
     return res.status(200).json({ message: "Student deleted successfully" });
   } catch (error) {
     console.error("Error deleting student:", error);

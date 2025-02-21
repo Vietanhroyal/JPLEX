@@ -44,9 +44,13 @@
           <a href="/api/editstudent/<%= data[i].studentId %>">
             <button type="button">Edit</button>
           </a>
-          <a href="/api/deletestudents?id=<%= data[i].studentId %>">
-            <button type="button">Delete</button>
-          </a>
+          <form
+            action="/api/deletestudent/<%= data[i].studentId %>?_method=DELETE"
+            method="POST"
+            style="display: inline"
+          >
+            <button type="submit">Delete</button>
+          </form>
         </td>
       </tr>
       <% } %>

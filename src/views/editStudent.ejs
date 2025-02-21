@@ -17,7 +17,10 @@
       <div class="row">
         <div class="col-md-8 offset-md-2">
           <h3 class="text-center">Edit profile student</h3>
-          <form action="/api/updatestudents?_method=PUT" method="POST">
+          <form
+            action="/api/upadatestudents/<%= student.studentId %>?_method=PUT"
+            method="POST"
+          >
             <div class="form-row">
               <!-- name -->
               <div class="form-group col-md-6">
@@ -31,11 +34,7 @@
                   required
                 />
               </div>
-              <!-- Gender -->
 
-              <!-- Birthdate -->
-
-              <!-- Phone Number -->
               <div class="form-group col-md-6">
                 <label for="phoneNumber">Phone Number</label>
                 <input
@@ -63,17 +62,6 @@
                 </select>
               </div>
               <!-- email -->
-              <div class="form-group col-md-6">
-                <label for="email">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  name="email"
-                  placeholder="Enter Email"
-                  value="<%= student.email %>"
-                  required
-                />
-              </div>
             </div>
 
             <!-- Address -->
@@ -91,7 +79,7 @@
 
             <!-- Submit Button -->
             <button type="submit" class="btn btn-primary btn-block">
-              Update
+              Update profile
             </button>
           </form>
         </div>

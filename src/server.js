@@ -1,12 +1,10 @@
 import express from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
-const methodOverride = require("method-override");
+import methodOverride from "method-override";
 
 import initWebRoutes from "./route/web";
-// cái này thì ok còn thằng dưới éo dc
 import initStudentRoutes from "./route/studentRoute";
-// đù má sao nó éo bắt vào cái đường dẫn đấy nhỉ
 import { connectDB } from "./config/database";
 import dotenv from "dotenv";
 
